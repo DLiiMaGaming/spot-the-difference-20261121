@@ -1,0 +1,227 @@
+/* Senja di Taman — Cari Bedanya. Warm dusk palette, big readable counters. */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #171226;
+  color: #f6ead8;
+  font-family: "Trebuchet MS", Verdana, sans-serif;
+}
+
+#app {
+  width: 1280px;
+  margin: 0 auto;
+  padding: 14px 20px 18px;
+}
+
+#hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #2c1e4a, #4a2545);
+  border: 2px solid #6b4a8a;
+  border-radius: 14px;
+}
+
+.brand-title {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #ffd166;
+  line-height: 1;
+}
+
+.brand-sub {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #e8b4d0;
+  margin-top: 4px;
+}
+
+.hud-stats { display: flex; gap: 10px; }
+
+.stat {
+  min-width: 76px;
+  padding: 6px 10px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid #7a5aa0;
+  border-radius: 10px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #c9a8e8;
+}
+
+.stat-value {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+.stat-remaining { border-color: #ffd166; background: rgba(255, 209, 102, 0.16); }
+.stat-remaining .stat-value { color: #ffd166; font-size: 26px; }
+
+#level-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 12px 2px 10px;
+}
+
+#level-name {
+  font-size: 19px;
+  font-weight: 800;
+  color: #ffd166;
+  white-space: nowrap;
+}
+
+#level-sub { font-size: 14px; color: #d8c8ee; }
+
+#time-track {
+  flex: 1;
+  height: 12px;
+  background: #2c1e4a;
+  border: 1px solid #6b4a8a;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#time-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #57cc99, #ffd166);
+  transition: width 0.9s linear;
+}
+
+#time-fill.low { background: linear-gradient(90deg, #ef476f, #ff8c42); }
+
+#panels {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+
+.panel { position: relative; }
+
+.panel-tag {
+  position: absolute;
+  top: -11px;
+  left: 14px;
+  z-index: 2;
+  padding: 3px 12px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #171226;
+  background: #ffd166;
+  border-radius: 9px;
+}
+
+.panel canvas {
+  display: block;
+  width: 560px;
+  height: 420px;
+  background: #241b3a;
+  border: 3px solid #6b4a8a;
+  border-radius: 14px;
+  cursor: crosshair;
+}
+
+.panel canvas.active-panel { border-color: #ffd166; box-shadow: 0 0 0 3px rgba(255, 209, 102, 0.35); }
+
+#controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: #241b3a;
+  border: 1px solid #4a3568;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #cbb8e8;
+}
+
+.key-hint kbd {
+  padding: 1px 6px;
+  color: #171226;
+  background: #ffd166;
+  border-radius: 5px;
+  font-weight: 700;
+  font-family: inherit;
+}
+
+.spacer { flex: 1; }
+
+#controls button, #overlay-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  font-family: inherit;
+  color: #171226;
+  background: #ffd166;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#controls button:hover, #overlay-button:hover { background: #ffdf8a; }
+#controls button:disabled { opacity: 0.45; cursor: default; }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 10, 30, 0.72);
+}
+
+.overlay.hidden { display: none; }
+
+.overlay-card {
+  width: 560px;
+  padding: 30px 36px 26px;
+  text-align: center;
+  background: linear-gradient(160deg, #2c1e4a, #3d2140);
+  border: 2px solid #ffd166;
+  border-radius: 18px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.6);
+}
+
+.overlay-kicker {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #e8b4d0;
+}
+
+.overlay-card h1 {
+  margin: 8px 0 6px;
+  font-size: 38px;
+  color: #ffd166;
+}
+
+.overlay-card p {
+  margin: 0 0 12px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #f6ead8;
+}
+
+.overlay-stars { font-size: 44px; letter-spacing: 8px; min-height: 52px; }
+.overlay-score { font-size: 18px; font-weight: 800; color: #ffffff; margin: 4px 0 16px; }
+.overlay-foot { margin-top: 12px; font-size: 13px; color: #cbb8e8; }
